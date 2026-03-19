@@ -1,192 +1,127 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>胡蕾网站</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+    <meta charset="UTF-8">
+    <title>胡蕾网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #000;
+            color: #333;
+            font-family: "微软雅黑", sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            cursor: pointer;
+        }
 
-  <style>
-    :root {
-      --hue: 335;           /* 粉紫主色调 */
-      --bg: hsl(var(--hue), 25%, 96%);
-      --txt: hsl(var(--hue), 40%, 20%);
-      --accent: hsl(var(--hue), 85%, 65%);
-      --accent-dark: hsl(var(--hue), 90%, 52%);
-      --glow: hsla(var(--hue), 80%, 70%, 0.35);
-    }
+        /* 恐怖背景闪烁 */
+        @keyframes flicker {
+            0% { background: #000; }
+            4% { background: #111; }
+            6% { background: #000; }
+            8% { background: #111; }
+            10% { background: #000; }
+            60% { background: #000; }
+            100% { background: #000; }
+        }
+        body {
+            animation: flicker 3s infinite;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 1;
+        }
 
-    html, body {
-      height: 100%;
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, var(--bg), hsl(var(--hue), 30%, 92%));
-      color: var(--txt);
-      overflow-x: hidden;
-    }
+        .title {
+            font-size: 42px;
+            color: darkred;
+            text-shadow: 0 0 10px red, 0 0 20px darkred;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at 20% 30%, var(--glow) 0%, transparent 40%),
-                  radial-gradient(circle at 80% 70%, var(--glow) 0%, transparent 45%);
-      pointer-events: none;
-      z-index: -2;
-    }
+        .phone {
+            font-size: 24px;
+            color: #999;
+            margin-bottom: 50px;
+        }
 
-    .container {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4vh 5vw;
-      position: relative;
-      text-align: center;
-    }
+        .tip {
+            font-size: 20px;
+            color: red;
+            text-shadow: 0 0 10px red;
+            animation: shake 0.5s infinite alternate;
+        }
 
-    h1 {
-      font-size: clamp(4.5rem, 14vw, 11rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      background: linear-gradient(90deg, #fff, var(--accent), #fff, var(--accent));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      background-size: 300% 100%;
-      animation: shine 8s linear infinite;
-      text-shadow: 0 0 40px var(--glow);
-      margin-bottom: 0.2em;
-      line-height: 0.92;
-    }
+        @keyframes shake {
+            from { transform: translateX(-2px); }
+            to { transform: translateX(2px); }
+        }
 
-    .subtitle {
-      font-size: clamp(1.4rem, 5vw, 2.8rem);
-      opacity: 0.92;
-      margin: 0.4em 0 2em;
-      letter-spacing: 0.06em;
-      font-weight: 300;
-      color: hsl(var(--hue), 50%, 35%);
-    }
+        /* 血手 */
+        .hand {
+            position: absolute;
+            bottom: -200px;
+            right: -150px;
+            width: 350px;
+            height: 500px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150" fill="%238B0000"><path d="M40,140 C30,120 25,100 30,80 C35,60 45,50 55,50 C65,50 70,65 65,85 C60,105 55,125 50,140 Z"></path></svg>') no-repeat;
+            opacity: 0;
+            transition: all 1s ease;
+            z-index: 999;
+        }
 
-    .tagline {
-      font-size: clamp(1.1rem, 3.5vw, 1.8rem);
-      max-width: 38ch;
-      line-height: 1.6;
-      margin: 1.5em auto 3em;
-      opacity: 0.88;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.9em 2.2em;
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: white;
-      background: var(--accent);
-      border: none;
-      border-radius: 50px;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s ease;
-      box-shadow: 0 8px 30px hsla(var(--hue), 70%, 50%, 0.3);
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      transform: translateY(-4px) scale(1.06);
-      box-shadow: 0 15px 40px hsla(var(--hue), 85%, 55%, 0.45);
-    }
-
-    .btn::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-      transform: translateX(-100%);
-      transition: 0.7s;
-    }
-
-    .btn:hover::after {
-      transform: translateX(100%);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
-
-    .btn-outline:hover {
-      background: var(--accent);
-      color: white;
-    }
-
-    .floating {
-      position: absolute;
-      pointer-events: none;
-      font-size: 2rem;
-      opacity: 0.25;
-      animation: float 18s infinite ease-in-out;
-      user-select: none;
-    }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0) rotate(0deg); }
-      50%     { transform: translateY(-80vh) rotate(360deg); }
-    }
-
-    @keyframes shine {
-      0%   { background-position: 0% 50%; }
-      100% { background-position: 300% 50%; }
-    }
-
-    @media (max-width: 640px) {
-      h1 { font-size: clamp(3.8rem, 18vw, 8rem); }
-      .btn-group { flex-direction: column; gap: 1.2rem; }
-      .btn { padding: 1em 2.5em; font-size: 1.1rem; }
-    }
-  </style>
+        /* 弹出文字 */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 60px;
+            color: red;
+            font-weight: bold;
+            text-shadow: 0 0 20px red, 0 0 40px darkred;
+            z-index: 1000;
+            transition: transform 0.8s ease;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>胡 蕾</h1>
-    <div class="subtitle">Hú Lěi</div>
-    
-    <p class="tagline">
-      这里大概是宇宙中第十七最可爱的胡蕾<br>
-      （前十六名正在激烈内战中，暂不开放报名）
-    </p>
+<div class="container">
+    <div class="title">胡蕾网站</div>
+    <div class="phone">联系电话：52088</div>
+    <div class="tip">点击屏幕继续查看...</div>
+</div>
 
-    <div class="btn-group">
-      <a class="btn" href="https://space.bilibili.com/xxxxxx" target="_blank">B站戳我</a>
-      <a class="btn" href="https://weibo.com/u/xxxxxx" target="_blank">微博在等你</a>
-      <a class="btn btn-outline" href="mailto:hulei@lovemail.com">给我发邮件</a>
-    </div>
-  </div>
+<div class="hand" id="bloodyHand"></div>
+<div class="popup" id="text">贺迁安拿命来</div>
 
-  <!-- 飘浮的小装饰 -->
-  <div class="floating" style="left:10%; top:15%; animation-delay:0s;">🌸</div>
-  <div class="floating" style="left:22%; top:65%; animation-delay:3s; font-size:2.8rem;">🫧</div>
-  <div class="floating" style="right:18%; top:22%; animation-delay:7s;">✨</div>
-  <div class="floating" style="right:12%; bottom:25%; animation-delay:11s; font-size:3.2rem;">🌟</div>
-  <div class="floating" style="left:35%; bottom:18%; animation-delay:15s;">💜</div>
+<script>
+    document.body.addEventListener('click', function() {
+        // 血手伸出来
+        const hand = document.getElementById('bloodyHand');
+        hand.style.opacity = '0.9';
+        hand.style.bottom = '0';
+        hand.style.right = '0';
+
+        // 弹出文字
+        const text = document.getElementById('text');
+        text.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+</script>
 
 </body>
 </html>
