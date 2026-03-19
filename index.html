@@ -1,3 +1,192 @@
-<title>胡蕾网站</title>
-<h1>404<h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>胡蕾网站</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
 
+  <style>
+    :root {
+      --hue: 335;           /* 粉紫主色调 */
+      --bg: hsl(var(--hue), 25%, 96%);
+      --txt: hsl(var(--hue), 40%, 20%);
+      --accent: hsl(var(--hue), 85%, 65%);
+      --accent-dark: hsl(var(--hue), 90%, 52%);
+      --glow: hsla(var(--hue), 80%, 70%, 0.35);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, var(--bg), hsl(var(--hue), 30%, 92%));
+      color: var(--txt);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, var(--glow) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 70%, var(--glow) 0%, transparent 45%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4vh 5vw;
+      position: relative;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(4.5rem, 14vw, 11rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      background: linear-gradient(90deg, #fff, var(--accent), #fff, var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 300% 100%;
+      animation: shine 8s linear infinite;
+      text-shadow: 0 0 40px var(--glow);
+      margin-bottom: 0.2em;
+      line-height: 0.92;
+    }
+
+    .subtitle {
+      font-size: clamp(1.4rem, 5vw, 2.8rem);
+      opacity: 0.92;
+      margin: 0.4em 0 2em;
+      letter-spacing: 0.06em;
+      font-weight: 300;
+      color: hsl(var(--hue), 50%, 35%);
+    }
+
+    .tagline {
+      font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+      max-width: 38ch;
+      line-height: 1.6;
+      margin: 1.5em auto 3em;
+      opacity: 0.88;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9em 2.2em;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: white;
+      background: var(--accent);
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 30px hsla(var(--hue), 70%, 50%, 0.3);
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 15px 40px hsla(var(--hue), 85%, 55%, 0.45);
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      transform: translateX(-100%);
+      transition: 0.7s;
+    }
+
+    .btn:hover::after {
+      transform: translateX(100%);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .floating {
+      position: absolute;
+      pointer-events: none;
+      font-size: 2rem;
+      opacity: 0.25;
+      animation: float 18s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50%     { transform: translateY(-80vh) rotate(360deg); }
+    }
+
+    @keyframes shine {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    @media (max-width: 640px) {
+      h1 { font-size: clamp(3.8rem, 18vw, 8rem); }
+      .btn-group { flex-direction: column; gap: 1.2rem; }
+      .btn { padding: 1em 2.5em; font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>胡 蕾</h1>
+    <div class="subtitle">Hú Lěi</div>
+    
+    <p class="tagline">
+      这里大概是宇宙中第十七最可爱的胡蕾<br>
+      （前十六名正在激烈内战中，暂不开放报名）
+    </p>
+
+    <div class="btn-group">
+      <a class="btn" href="https://space.bilibili.com/xxxxxx" target="_blank">B站戳我</a>
+      <a class="btn" href="https://weibo.com/u/xxxxxx" target="_blank">微博在等你</a>
+      <a class="btn btn-outline" href="mailto:hulei@lovemail.com">给我发邮件</a>
+    </div>
+  </div>
+
+  <!-- 飘浮的小装饰 -->
+  <div class="floating" style="left:10%; top:15%; animation-delay:0s;">🌸</div>
+  <div class="floating" style="left:22%; top:65%; animation-delay:3s; font-size:2.8rem;">🫧</div>
+  <div class="floating" style="right:18%; top:22%; animation-delay:7s;">✨</div>
+  <div class="floating" style="right:12%; bottom:25%; animation-delay:11s; font-size:3.2rem;">🌟</div>
+  <div class="floating" style="left:35%; bottom:18%; animation-delay:15s;">💜</div>
+
+</body>
+</html>
