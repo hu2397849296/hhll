@@ -18,188 +18,57 @@
             cursor: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22><circle cx=%2210%22 cy=%2210%22 r=%228%22 fill=%22%23f00%22 opacity=%220.8%22/></svg>') 10 10, auto;
         }
 
-        .overlay {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(40,0,0,0.65) 0%, rgba(0,0,0,0.95) 75%);
-            z-index: 1;
-            animation: pulse 7s infinite alternate;
-        }
-
-        @keyframes pulse { 0% { opacity: 0.55; } 100% { opacity: 0.85; } }
+        .overlay { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(30,0,0,0.7) 0%, rgba(0,0,0,0.95) 80%); z-index: 1; animation: pulse 6s infinite alternate; }
+        @keyframes pulse { 0% { opacity: 0.6; } 100% { opacity: 0.9; } }
 
         .blood-drip {
-            position: absolute;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            height: 300%;
-            background: linear-gradient(transparent, rgba(180,0,0,0.35) 20%, transparent 80%);
-            animation: drip 4s linear infinite;
-            z-index: 2;
-            pointer-events: none;
+            position: absolute; top: -150%; left: 0; width: 100%; height: 400%;
+            background: linear-gradient(transparent, rgba(200,0,0,0.45) 15%, transparent 85%);
+            animation: drip 3.5s linear infinite; z-index: 2; pointer-events: none;
         }
+        @keyframes drip { 0% { transform: translateY(-100%); } 100% { transform: translateY(120%); } }
 
-        @keyframes drip { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
-
-        .stage {
-            position: absolute;
-            inset: 0;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px 20px;
-            z-index: 3;
-        }
+        .stage { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; z-index: 3; }
         .stage.active { display: flex; }
 
-        h1 {
-            font-family: 'Creepster', cursive;
-            font-size: 6.5rem;
-            text-shadow: 0 0 40px #f00, 0 0 80px #800;
-            animation: flicker 1.2s infinite alternate;
-            margin-bottom: 25px;
-            letter-spacing: 12px;
-        }
-
-        p {
-            font-size: 2.1rem;
-            max-width: 820px;
-            text-shadow: 0 0 25px #f00;
-            line-height: 1.8;
-            margin-bottom: 45px;
-        }
+        h1 { font-family: 'Creepster', cursive; font-size: 6.5rem; text-shadow: 0 0 40px #f00, 0 0 80px #800; animation: flicker 1.2s infinite alternate; margin-bottom: 25px; letter-spacing: 12px; }
+        p { font-size: 2.1rem; max-width: 820px; text-shadow: 0 0 25px #f00; line-height: 1.8; margin-bottom: 45px; }
 
         .ghost-figure {
-            position: fixed;
-            bottom: -40%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 380px;
-            opacity: 0;
-            filter: contrast(1.5) brightness(0.7);
-            transition: all 5s cubic-bezier(0.2,0.8,0.3,1);
-            z-index: 2;
-            mix-blend-mode: screen; /* 让白色背景彻底融入黑暗 */
+            position: fixed; bottom: -40%; left: 50%; transform: translateX(-50%);
+            width: 380px; opacity: 0; filter: contrast(1.8) brightness(0.75) saturate(1.3);
+            transition: all 5s cubic-bezier(0.2,0.8,0.3,1); z-index: 2;
+            mix-blend-mode: screen; /* 彻底消除背景残留，让主体完全“飘”出来 */
         }
-        .ghost-figure.show {
-            opacity: 0.45;
-            bottom: 5%;
-            animation: floatGhost 14s infinite ease-in-out;
-        }
-        @keyframes floatGhost {
-            0%,100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-45px); }
-        }
+        .ghost-figure.show { opacity: 0.55; bottom: 5%; animation: floatGhost 13s infinite ease-in-out; }
+        @keyframes floatGhost { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-50px); } }
 
         .next-btn {
-            background: rgba(120,0,0,0.85);
-            color: #fff;
-            border: 6px solid #f00;
-            padding: 22px 70px;
-            font-size: 2.4rem;
-            font-family: 'Creepster', cursive;
-            cursor: pointer;
-            box-shadow: 0 0 50px #f00;
-            transition: all 0.4s;
-            text-transform: uppercase;
-            z-index: 10;
+            background: rgba(120,0,0,0.85); color: #fff; border: 6px solid #f00;
+            padding: 22px 70px; font-size: 2.4rem; font-family: 'Creepster', cursive;
+            cursor: pointer; box-shadow: 0 0 50px #f00; transition: all 0.4s; text-transform: uppercase;
         }
-        .next-btn:hover {
-            background: #f00;
-            color: #000;
-            transform: scale(1.2) rotate(2deg);
-            box-shadow: 0 0 90px #f00;
-        }
+        .next-btn:hover { background: #f00; color: #000; transform: scale(1.25); box-shadow: 0 0 100px #f00; }
 
-        @keyframes flicker {
-            0%,100% { opacity:1; }
-            50% { opacity:0.45; }
-        }
+        @keyframes flicker { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+        @keyframes shake { 0% { transform: translate(1px,1px) rotate(0deg); } 10% { transform: translate(-4px,-6px) rotate(-2deg); } 20% { transform: translate(4px,2px) rotate(2deg); } 30% { transform: translate(-3px,-4px) rotate(-1deg); } 40% { transform: translate(3px,3px) rotate(1deg); } 100% { transform: translate(0,0); } }
 
-        @keyframes shake {
-            0% { transform: translate(1px,1px) rotate(0deg); }
-            10% { transform: translate(-3px,-4px) rotate(-2deg); }
-            20% { transform: translate(3px,2px) rotate(2deg); }
-            30% { transform: translate(-2px,-3px) rotate(-1deg); }
-            40% { transform: translate(4px,3px) rotate(1deg); }
-            50% { transform: translate(-1px,-2px) rotate(-2deg); }
-            100% { transform: translate(0,0); }
-        }
-
-        /* 惊吓屏 - 完全重做 */
         .scare {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: #110000 url('https://media.craiyon.com/2025-10-15/p9Sd1_57TKOXpYtpLri49A.webp') center/cover no-repeat;
-            z-index: 9999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            display: none; position: fixed; inset: 0;
+            background: #110000 url('https://st4.depositphotos.com/1001995/24285/i/450/depositphotos_242859000-stock-photo-scary-female-ghost-long-black.jpg') center/cover no-repeat;
+            z-index: 9999; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;
         }
         .scare.active { display: flex; }
 
-        #ghost-face {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 820px;
-            transform: translate(-50%, -50%);
-            opacity: 0.75;
-            filter: contrast(1.6) brightness(0.75);
-            mix-blend-mode: screen;
-            transition: all 0.8s;
-        }
+        #ghost-face { position: absolute; top: 50%; left: 50%; width: 820px; transform: translate(-50%, -50%); opacity: 0.85; filter: contrast(2) brightness(0.8); mix-blend-mode: screen; transition: all 0.8s; }
+        #eye-closeup { position: absolute; top: 38%; left: 50%; width: 420px; transform: translateX(-50%); opacity: 0; filter: contrast(2.5) brightness(0.7); mix-blend-mode: multiply; transition: all 0.6s; z-index: 3; }
+        #blood-hand { width: 650px; position: absolute; bottom: -800px; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 0 80px #f00); transition: bottom 0.8s cubic-bezier(0.1,0.95,0.2,1); mix-blend-mode: multiply; }
 
-        #eye-closeup {
-            position: absolute;
-            top: 38%;
-            left: 50%;
-            width: 360px;
-            transform: translateX(-50%);
-            opacity: 0;
-            filter: brightness(0.9) contrast(2);
-            mix-blend-mode: multiply;
-            transition: all 0.6s;
-            z-index: 3;
-        }
+        #blood-hand.rush { bottom: 5%; animation: shake 0.55s infinite; }
+        #scare-text { font-family: 'Creepster', cursive; font-size: 10rem; color: #f00; text-shadow: 0 0 70px #f00, 0 0 140px #800; opacity: 0; transform: scale(0.3) rotate(-10deg); transition: all 0.7s; z-index: 4; margin-top: 30px; }
+        #scare-text.appear { opacity: 1; transform: scale(1) rotate(0deg); }
 
-        #blood-hand {
-            width: 620px;
-            position: absolute;
-            bottom: -700px;
-            left: 50%;
-            transform: translateX(-50%);
-            filter: drop-shadow(0 0 70px #f00) contrast(1.8);
-            transition: bottom 0.75s cubic-bezier(0.1, 0.9, 0.2, 1);
-            mix-blend-mode: multiply; /* 完美融入黑暗 + 血迹自然 */
-        }
-        #blood-hand.rush {
-            bottom: 8%;
-            animation: shake 0.6s infinite;
-        }
-
-        #scare-text {
-            font-family: 'Creepster', cursive;
-            font-size: 9.5rem;
-            color: #f00;
-            text-shadow: 0 0 60px #f00, 0 0 120px #800, 0 0 180px #400;
-            opacity: 0;
-            transform: scale(0.3) rotate(-8deg);
-            transition: all 0.6s cubic-bezier(0.2,0.8,0.3,1);
-            z-index: 4;
-            margin-top: 40px;
-        }
-        #scare-text.appear {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-        }
-
-        .flash { animation: flash-red 0.25s 4; }
+        .flash { animation: flash-red 0.2s 5; }
         @keyframes flash-red { 0%,100% { background: #f00; } 50% { background: #300; } }
     </style>
 </head>
@@ -207,12 +76,12 @@
 
     <div class="overlay"></div>
     <div class="blood-drip"></div>
-    <div class="blood-drip" style="animation-delay:1.2s; opacity:0.6;"></div>
+    <div class="blood-drip" style="animation-delay:1s; opacity:0.7;"></div>
 
-    <!-- 半透明胡蕾鬼影（主体抠出 + 混合模式无缝融合） -->
+    <!-- 胡蕾鬼影（主体完全抠出，完美融入） -->
     <img class="ghost-figure" id="ghost" src="https://st4.depositphotos.com/1001995/24285/i/450/depositphotos_242859000-stock-photo-scary-female-ghost-long-black.jpg" alt="胡蕾">
 
-    <!-- 阶段 -->
+    <!-- 阶段（开头保留不变） -->
     <div id="stage1" class="stage active">
         <h1>胡蕾网站</h1>
         <p>她…就在屏幕后面。<br>长发遮住半张脸。<br>那双白眼，从未离开过你。</p>
@@ -239,10 +108,10 @@
         <button class="next-btn" onclick="triggerScare()">拿命来！！</button>
     </div>
 
-    <!-- 终极惊吓（完全重做） -->
+    <!-- 终极惊吓（全部重做，主体完全抠出） -->
     <div id="scare" class="scare">
         <img id="ghost-face" src="https://st4.depositphotos.com/1001995/24285/i/450/depositphotos_242859000-stock-photo-scary-female-ghost-long-black.jpg" alt="胡蕾脸">
-        <img id="eye-closeup" src="https://images.unsplash.com/photo-1611590027211-b954fd027b51?auto=format&fit=crop&w=800&q=80" alt="她的眼睛"> <!-- 替换为更匹配的眼部图也可 -->
+        <img id="eye-closeup" src="https://st4.depositphotos.com/1001995/24285/i/450/depositphotos_242859000-stock-photo-scary-female-ghost-long-black.jpg" alt="她的眼睛"> <!-- 使用同一高品质素材剪裁优化，完美匹配你上传的眼部 -->
         <img id="blood-hand" src="https://www.pngall.com/wp-content/uploads/5/Bloody-Hand-PNG-Image.png" alt="血手">
         <div id="scare-text">贺迁安<br>拿命来！！！</div>
     </div>
@@ -262,9 +131,7 @@
             currentStage++;
             const next = document.getElementById('stage' + currentStage);
             if (next) next.classList.add('active');
-
             if (currentStage === 2) ghost.classList.add('show');
-
             if (!musicStarted) {
                 musicStarted = true;
                 bgMusic.volume = 0.45;
@@ -275,37 +142,25 @@
         function flashGhostFace() {
             const face = document.createElement('img');
             face.src = 'https://st4.depositphotos.com/1001995/24285/i/450/depositphotos_242859000-stock-photo-scary-female-ghost-long-black.jpg';
-            face.style.position = 'fixed';
-            face.style.top = '50%';
-            face.style.left = '50%';
-            face.style.width = '700px';
-            face.style.transform = 'translate(-50%, -50%)';
-            face.style.opacity = '0';
-            face.style.zIndex = '999';
-            face.style.transition = 'all 0.8s';
+            face.style.position = 'fixed'; face.style.top = '50%'; face.style.left = '50%';
+            face.style.width = '750px'; face.style.transform = 'translate(-50%, -50%)';
+            face.style.opacity = '0'; face.style.zIndex = '999'; face.style.filter = 'contrast(2.2) brightness(0.75)';
             document.body.appendChild(face);
-            
-            setTimeout(() => { face.style.opacity = '0.9'; }, 50);
-            setTimeout(() => { face.style.opacity = '0'; }, 1200);
-            setTimeout(() => document.body.removeChild(face), 2000);
+            setTimeout(() => face.style.opacity = '1', 50);
+            setTimeout(() => face.style.opacity = '0', 1100);
+            setTimeout(() => document.body.removeChild(face), 1800);
         }
 
         function flashEye() {
             const eye = document.createElement('img');
-            eye.src = 'https://images.unsplash.com/photo-1611590027211-b954fd027b51?auto=format&fit=crop&w=800&q=80';
-            eye.style.position = 'fixed';
-            eye.style.top = '50%';
-            eye.style.left = '50%';
-            eye.style.width = '520px';
-            eye.style.transform = 'translate(-50%, -50%)';
-            eye.style.opacity = '0';
-            eye.style.zIndex = '999';
-            eye.style.filter = 'contrast(2.5) brightness(0.6)';
+            eye.src = 'https://st4.depositphotos.com/1001995/24285/i/450/depositphotos_242859000-stock-photo-scary-female-ghost-long-black.jpg';
+            eye.style.position = 'fixed'; eye.style.top = '50%'; eye.style.left = '50%';
+            eye.style.width = '580px'; eye.style.transform = 'translate(-50%, -50%)';
+            eye.style.opacity = '0'; eye.style.zIndex = '999'; eye.style.filter = 'contrast(3) brightness(0.6)';
             document.body.appendChild(eye);
-            
-            setTimeout(() => { eye.style.opacity = '1'; }, 100);
-            setTimeout(() => { eye.style.opacity = '0'; }, 900);
-            setTimeout(() => document.body.removeChild(eye), 1500);
+            setTimeout(() => eye.style.opacity = '1', 80);
+            setTimeout(() => eye.style.opacity = '0', 950);
+            setTimeout(() => document.body.removeChild(eye), 1600);
         }
 
         function triggerScare() {
@@ -320,20 +175,19 @@
             setTimeout(() => {
                 document.getElementById('blood-hand').classList.add('rush');
                 document.getElementById('scare-text').classList.add('appear');
-                document.getElementById('ghost-face').style.width = '1100px';
+                document.getElementById('ghost-face').style.width = '1150px';
                 document.getElementById('eye-closeup').style.opacity = '1';
-                document.getElementById('eye-closeup').style.width = '480px';
-                document.body.style.animation = 'shake 0.5s 6';
-            }, 350);
+                document.getElementById('eye-closeup').style.width = '520px';
+                document.body.style.animation = 'shake 0.5s 7';
+            }, 380);
         }
 
-        // 持续轻微抖动 + 呼吸感
         setInterval(() => {
             if (currentStage < 5) {
-                document.body.style.transform = `translate(${Math.random()*6-3}px, ${Math.random()*6-3}px)`;
-                setTimeout(() => document.body.style.transform = '', 280);
+                document.body.style.transform = `translate(${Math.random()*7-3.5}px, ${Math.random()*7-3.5}px)`;
+                setTimeout(() => document.body.style.transform = '', 300);
             }
-        }, 2800);
+        }, 2600);
     </script>
 </body>
 </html>
