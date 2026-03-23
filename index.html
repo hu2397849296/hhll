@@ -3,274 +3,519 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>胡蕾网站</title>
+    <title>不死不运 • 可爱个人信息储存册</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=UnifrakturCook:wght@700&display=swap');
-
-        * { margin:0; padding:0; box-sizing:border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Comic+Neue:wght@700&display=swap');
+        
+        :root {
+            --fuuko-pink: #ff9ec4;
+            --andy-white: #f8f8ff;
+            --unluck-gold: #ffd700;
+        }
+        
         body {
-            background: #000 url('https://thumbs.dreamstime.com/b/creepy-abandoned-hospital-hallway-blood-splatter-horror-background-unsettling-image-depicts-long-dimly-lit-hospital-396281869.jpg') center/cover no-repeat fixed;
-            color: #c00;
-            font-family: 'UnifrakturCook', cursive;
-            overflow: hidden;
-            height: 100vh;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fff0f5 0%, #e0f2fe 100%);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(173, 216, 230, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .anime-header {
+            background: linear-gradient(to right, #ff9ec4, #a5d8ff);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+            border-bottom: 8px solid #ffd700;
+        }
+        
+        .card {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 6px solid #ffd700;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
+        }
+        
+        .card:hover {
+            transform: scale(1.05) rotate(1deg);
+            border-color: #ff69b4;
+        }
+        
+        .port-tab {
             position: relative;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22><circle cx=%2210%22 cy=%2210%22 r=%228%22 fill=%22%23f00%22 opacity=%220.7%22/></svg>') 10 10, auto;
+            transition: all 0.3s;
         }
-
-        .overlay {
+        
+        .port-tab.active {
+            background: linear-gradient(to right, #ff9ec4, #ffd700);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .port-tab::after {
+            content: '✦';
             position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(50,0,0,0.6) 0%, rgba(0,0,0,0.9) 70%);
-            pointer-events: none;
-            z-index: 0;
-            animation: pulse 8s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.4; }
-            100% { opacity: 0.7; }
-        }
-
-        .stage {
-            position: absolute;
-            inset: 0;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 30px;
-            z-index: 2;
-        }
-
-        .stage.active { display: flex; }
-
-        h1 {
-            font-family: 'Creepster', cursive;
-            font-size: 6rem;
-            text-shadow: 0 0 30px #f00, 0 0 60px #800;
-            animation: flicker 1.5s infinite alternate;
-            margin-bottom: 20px;
-            letter-spacing: 10px;
-        }
-
-        p {
-            font-size: 2rem;
-            max-width: 800px;
-            text-shadow: 0 0 20px #f00;
-            line-height: 1.7;
-            margin-bottom: 50px;
-            opacity: 0.9;
-        }
-
-        .ghost-figure {
-            position: fixed;
-            bottom: -30%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 400px;
+            top: -8px;
+            right: 10px;
+            font-size: 20px;
+            color: #ffd700;
             opacity: 0;
-            filter: brightness(0.6) contrast(1.4);
-            transition: all 4s ease-in-out;
-            z-index: 1;
-            pointer-events: none;
+            transition: all 0.3s;
         }
-
-        .ghost-figure.show {
-            opacity: 0.4;
-            bottom: 10%;
-            animation: float 12s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%,100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-30px); }
-        }
-
-        .next-btn {
-            background: rgba(150,0,0,0.7);
-            color: #fff;
-            border: 5px solid #f00;
-            padding: 20px 60px;
-            font-size: 2.2rem;
-            font-family: 'Creepster', cursive;
-            cursor: pointer;
-            box-shadow: 0 0 40px #f00;
-            transition: all 0.4s;
-            text-transform: uppercase;
-        }
-
-        .next-btn:hover {
-            background: #f00;
-            transform: scale(1.15);
-            box-shadow: 0 0 70px #f00;
-        }
-
-        @keyframes flicker {
-            0%,100% { opacity:1; text-shadow:0 0 30px #f00; }
-            50% { opacity:0.5; text-shadow:0 0 15px #800; }
-        }
-
-        @keyframes shake {
-            0% { transform: translate(0); }
-            10% { transform: translate(-4px, -6px) rotate(-2deg); }
-            20% { transform: translate(4px, 2px) rotate(2deg); }
-            /* ... 省略中间，类似之前 */
-            100% { transform: translate(0); }
-        }
-
-        .scare {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: #200 url('https://media.craiyon.com/2025-10-15/p9Sd1_57TKOXpYtpLri49A.webp') center/contain no-repeat;
-            background-color: rgba(100,0,0,0.8);
-            z-index: 9999;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #f00;
-        }
-
-        .scare.active { display: flex; }
-
-        #blood-hand {
-            width: 500px;
-            position: absolute;
-            bottom: -600px;
-            left: 50%;
-            transform: translateX(-50%);
-            filter: drop-shadow(0 0 60px #f00);
-            transition: bottom 0.7s cubic-bezier(0.1,0.9,0.2,1);
-        }
-
-        #blood-hand.rush { bottom: 15%; animation: shake 0.7s infinite; }
-
-        #scare-text {
-            font-size: 9rem;
-            text-shadow: 0 0 50px #f00, 0 0 100px #800;
-            opacity: 0;
-            transform: scale(0.4);
-            transition: all 0.5s;
-        }
-
-        #scare-text.appear {
+        
+        .port-tab.active::after {
             opacity: 1;
-            transform: scale(1);
-            animation: flicker 0.8s infinite;
+            transform: rotate(360deg);
         }
-
-        .flash { animation: flash-red 0.3s 3; }
-
-        @keyframes flash-red {
-            0%,100% { background: #f00; }
-            50% { background: #400; }
+        
+        .edit-input {
+            border: 3px dashed #ff9ec4;
+            border-radius: 15px;
+            padding: 8px 12px;
+            font-size: 1rem;
         }
-
-        .blood-drip {
+        
+        .unluck-particle {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            font-size: 30px;
+            animation: unluck-float 4s infinite ease-in-out;
+            opacity: 0.6;
             pointer-events: none;
-            background: linear-gradient(transparent, rgba(200,0,0,0.3) 10%, transparent);
-            animation: drip 6s linear infinite;
         }
-
-        @keyframes drip {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
+        
+        @keyframes unluck-float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(15deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        .chibi-fuuko {
+            width: 80px;
+            height: 80px;
+            background: url('https://i.imgur.com/8zK8z0L.png') center/cover; /* 可爱不死不运风格替代表情（可替换） */
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 0 20px #ff69b4;
         }
     </style>
 </head>
-<body>
+<body class="relative">
+    <!-- 不死不运粒子背景 -->
+    <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
 
-    <div class="overlay"></div>
-    <div class="blood-drip"></div>
+    <div class="max-w-4xl mx-auto p-6 relative z-10">
+        <!-- 标题栏 -->
+        <div class="anime-header rounded-3xl p-8 text-center mb-8 relative overflow-hidden">
+            <div class="flex items-center justify-center gap-6">
+                <!-- 左边不死安迪小头像 -->
+                <div class="w-20 h-20 bg-white rounded-2xl border-4 border-white flex items-center justify-center text-4xl shadow-inner">💀</div>
+                <!-- 标题 -->
+                <div>
+                    <h1 class="text-5xl font-bold text-white tracking-widest drop-shadow-lg" style="font-family: 'Comic Neue', cursive;">
+                        不死不运
+                    </h1>
+                    <p class="text-white/90 text-2xl mt-1">可爱个人信息储存册 ✨</p>
+                </div>
+                <!-- 右边不运芙子小头像 -->
+                <div class="chibi-fuuko"></div>
+            </div>
+            <div class="absolute -top-4 -right-4 text-6xl opacity-30">🍀</div>
+            <div class="absolute -bottom-6 -left-6 text-6xl opacity-30 rotate-12">☠️</div>
+        </div>
 
-    <img class="ghost-figure" id="ghost" src="https://media.craiyon.com/2025-10-15/p9Sd1_57TKOXpYtpLri49A.webp" alt="胡蕾鬼影">
+        <!-- 端口切换栏（三种不同端口设计） -->
+        <div class="flex justify-center gap-3 mb-8 bg-white/80 backdrop-blur-xl rounded-3xl p-3 shadow-xl">
+            <!-- 端口1：芙子可爱粉港 -->
+            <button onclick="switchPort(0)" id="port0"
+                    class="port-tab px-8 py-4 rounded-2xl font-bold text-lg flex items-center gap-2 active">
+                <span class="text-2xl">🌸</span>
+                <span>芙子粉港</span>
+            </button>
+            <!-- 端口2：安迪不死白港 -->
+            <button onclick="switchPort(1)" id="port1"
+                    class="port-tab px-8 py-4 rounded-2xl font-bold text-lg flex items-center gap-2">
+                <span class="text-2xl">⚔️</span>
+                <span>安迪白港</span>
+            </button>
+            <!-- 端口3：合体不运金港 -->
+            <button onclick="switchPort(2)" id="port2"
+                    class="port-tab px-8 py-4 rounded-2xl font-bold text-lg flex items-center gap-2">
+                <span class="text-2xl">🌟</span>
+                <span>不运金港</span>
+            </button>
+        </div>
 
-    <!-- stages -->
-    <div id="stage1" class="stage active">
-        <h1>胡蕾网站</h1>
-        <p>她还在看着你。<br>从屏幕的另一边。<br>长发遮住了半张脸…<br>但那双眼睛，从未闭上。</p>
-        <button class="next-btn" onclick="nextStage()">凝视深渊</button>
+        <!-- 主内容区域 -->
+        <div id="main-content" class="card p-8">
+            <!-- 基本信息港 -->
+            <div id="port-content-0" class="port-content">
+                <h2 class="text-3xl font-bold text-pink-500 mb-6 flex items-center gap-3">
+                    📋 基本信息 <span class="text-sm font-normal text-gray-500">(点击铅笔编辑)</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="basic-list">
+                    <!-- JS动态填充 -->
+                </div>
+            </div>
+
+            <!-- 爱好港 -->
+            <div id="port-content-1" class="port-content hidden">
+                <h2 class="text-3xl font-bold text-sky-500 mb-6 flex items-center gap-3">
+                    🎮 爱好 & 喜好
+                </h2>
+                <div class="space-y-6" id="hobby-list">
+                    <!-- JS动态填充 -->
+                </div>
+            </div>
+
+            <!-- 回忆港（自定义） -->
+            <div id="port-content-2" class="port-content hidden">
+                <h2 class="text-3xl font-bold text-amber-500 mb-6 flex items-center gap-3">
+                    📖 回忆 & 自定义
+                </h2>
+                <div id="custom-list" class="space-y-4">
+                    <!-- JS动态填充 -->
+                </div>
+                <button onclick="addCustomField()" 
+                        class="mt-8 w-full bg-gradient-to-r from-amber-400 to-pink-400 text-white py-4 rounded-2xl font-bold text-xl hover:scale-105 transition">
+                    + 新增自定义条目（像不运规则一样自由添加！）
+                </button>
+            </div>
+        </div>
+
+        <!-- 操作栏 -->
+        <div class="flex justify-between mt-8">
+            <button onclick="resetAllData()" 
+                    class="flex items-center gap-2 bg-red-100 hover:bg-red-200 text-red-600 px-6 py-3 rounded-2xl font-bold">
+                <i class="fas fa-trash"></i> 重置全部
+            </button>
+            
+            <button onclick="exportData()" 
+                    class="flex items-center gap-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-600 px-6 py-3 rounded-2xl font-bold">
+                <i class="fas fa-download"></i> 导出备份
+            </button>
+            
+            <button onclick="importData()" 
+                    class="flex items-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-600 px-6 py-3 rounded-2xl font-bold">
+                <i class="fas fa-upload"></i> 导入备份
+            </button>
+        </div>
+        
+        <div class="text-center mt-10 text-xs text-gray-400">
+            数据保存在浏览器本地 • 不死不运风格由 Grok 特别设计 • 随时刷新也不会丢失哦～
+        </div>
     </div>
-
-    <div id="stage2" class="stage">
-        <h1>胡蕾网站</h1>
-        <p>三年前的那个雨夜…<br>她被拖进了走廊尽头。<br>现在，她回来了。<br>带着血，和怨念。</p>
-        <button class="next-btn" onclick="nextStage()">继续看</button>
-    </div>
-
-    <div id="stage3" class="stage">
-        <h1>胡蕾网站</h1>
-        <p>贺迁安…<br>他用命换了她的出现。<br>现在轮到你了。<br>拿命来。</p>
-        <button class="next-btn" onclick="nextStage()">我准备好了</button>
-    </div>
-
-    <div id="stage4" class="stage">
-        <h1 style="color:#fff; font-size:7rem; animation:flicker 0.5s infinite;">别回头</h1>
-        <p>她已经站在你身后了。<br>闻到你的恐惧了吗？</p>
-        <button class="next-btn" onclick="triggerScare()">拿命来换</button>
-    </div>
-
-    <!-- 惊吓屏 -->
-    <div id="scare" class="scare">
-        <img id="blood-hand" src="https://t3.ftcdn.net/jpg/06/70/44/78/360_F_670447881_CHfFRGULFTbfgb2BtGRSrzOgJ8XcmFC9.jpg" alt="血手">
-        <div id="scare-text">贺迁安拿命来！！！</div>
-    </div>
-
-    <audio id="bgmusic" loop preload="auto">
-        <source src="https://cdn.pixabay.com/audio/2022/03/24/audio_5b4d3d3d3d.mp3" type="audio/mpeg">
-    </audio>
 
     <script>
-        let currentStage = 1;
-        const bgMusic = document.getElementById('bgmusic');
-        const ghost = document.getElementById('ghost');
-        let musicStarted = false;
+        // 默认个人信息清单（你可以自己修改这些键值）
+        let userData = {
+            name: "你的名字",
+            nickname: "你的昵称",
+            age: "18",
+            birthday: "2000-01-01",
+            zodiac: "水瓶",
+            gender: "可爱人类",
+            favoriteFood: "草莓大福",
+            favoriteAnime: "不死不运",
+            favoriteColor: "粉色",
+            bio: "我是一个被不运规则守护的普通人～",
+            hobbies: ["看动漫", "画画", "吃甜食", "收集不死不运周边"],
+            customs: [
+                { key: "最想实现的愿望", value: "成为不死不运主角！" },
+                { key: "最喜欢的人", value: "安迪 & 芙子" }
+            ]
+        };
 
-        function nextStage() {
-            document.getElementById('stage' + currentStage).classList.remove('active');
-            currentStage++;
-            const next = document.getElementById('stage' + currentStage);
-            if (next) next.classList.add('active');
+        // 加载本地数据
+        function loadData() {
+            const saved = localStorage.getItem('undeadUnluckProfile');
+            if (saved) userData = JSON.parse(saved);
+        }
 
-            if (currentStage === 2) ghost.classList.add('show');  // 第二步鬼影出现
+        function saveData() {
+            localStorage.setItem('undeadUnluckProfile', JSON.stringify(userData));
+        }
 
-            if (!musicStarted) {
-                musicStarted = true;
-                bgMusic.volume = 0.4;
-                bgMusic.play().catch(()=>{});
+        // 渲染不同端口内容
+        function renderBasicPort() {
+            const container = document.getElementById('basic-list');
+            container.innerHTML = `
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-pink-400 text-sm">姓名</span>
+                            <p id="name-display" class="text-2xl font-bold">${userData.name}</p>
+                        </div>
+                        <button onclick="editField('name')" class="text-2xl text-pink-400 hover:text-pink-600"><i class="fas fa-pencil"></i></button>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-pink-400 text-sm">昵称</span>
+                            <p id="nickname-display" class="text-2xl font-bold">${userData.nickname}</p>
+                        </div>
+                        <button onclick="editField('nickname')" class="text-2xl text-pink-400 hover:text-pink-600"><i class="fas fa-pencil"></i></button>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-pink-400 text-sm">年龄</span>
+                            <p id="age-display" class="text-2xl font-bold">${userData.age}</p>
+                        </div>
+                        <button onclick="editField('age')" class="text-2xl text-pink-400 hover:text-pink-600"><i class="fas fa-pencil"></i></button>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-pink-400 text-sm">生日</span>
+                            <p id="birthday-display" class="text-2xl font-bold">${userData.birthday}</p>
+                        </div>
+                        <button onclick="editField('birthday')" class="text-2xl text-pink-400 hover:text-pink-600"><i class="fas fa-pencil"></i></button>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-pink-400 text-sm">星座</span>
+                            <p id="zodiac-display" class="text-2xl font-bold">${userData.zodiac}</p>
+                        </div>
+                        <button onclick="editField('zodiac')" class="text-2xl text-pink-400 hover:text-pink-600"><i class="fas fa-pencil"></i></button>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-pink-400 text-sm">性别</span>
+                            <p id="gender-display" class="text-2xl font-bold">${userData.gender}</p>
+                        </div>
+                        <button onclick="editField('gender')" class="text-2xl text-pink-400 hover:text-pink-600"><i class="fas fa-pencil"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderHobbyPort() {
+            const container = document.getElementById('hobby-list');
+            let html = `
+                <div class="card p-8">
+                    <div class="flex justify-between">
+                        <span class="text-sky-500 text-xl font-bold">最爱食物</span>
+                        <button onclick="editField('favoriteFood')" class="text-2xl text-sky-400"><i class="fas fa-pencil"></i></button>
+                    </div>
+                    <p class="text-3xl mt-3">${userData.favoriteFood}</p>
+                </div>
+                <div class="card p-8">
+                    <div class="flex justify-between">
+                        <span class="text-sky-500 text-xl font-bold">最爱动漫</span>
+                        <button onclick="editField('favoriteAnime')" class="text-2xl text-sky-400"><i class="fas fa-pencil"></i></button>
+                    </div>
+                    <p class="text-3xl mt-3">${userData.favoriteAnime}</p>
+                </div>
+                <div class="card p-8">
+                    <div class="flex justify-between">
+                        <span class="text-sky-500 text-xl font-bold">最爱颜色</span>
+                        <button onclick="editField('favoriteColor')" class="text-2xl text-sky-400"><i class="fas fa-pencil"></i></button>
+                    </div>
+                    <p class="text-3xl mt-3">${userData.favoriteColor}</p>
+                </div>
+                
+                <div class="card p-8">
+                    <span class="text-sky-500 text-xl font-bold block mb-4">我的爱好清单</span>
+                    <div class="flex flex-wrap gap-3" id="hobbies-tags">
+                        ${userData.hobbies.map((h, i) => `
+                            <div onclick="removeHobby(${i})" class="bg-sky-100 hover:bg-sky-200 px-6 py-2 rounded-3xl text-lg cursor-pointer flex items-center gap-2">
+                                ${h} <span class="text-xs text-red-400">×</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-6">
+                        <input id="new-hobby" type="text" placeholder="输入新爱好（按回车添加）" 
+                               class="edit-input w-full" onkeypress="if(event.key==='Enter') addHobby()">
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderCustomPort() {
+            const container = document.getElementById('custom-list');
+            let html = '';
+            userData.customs.forEach((item, index) => {
+                html += `
+                    <div class="card p-6 flex justify-between items-center">
+                        <div class="flex-1">
+                            <span class="text-amber-500 font-bold">${item.key}</span>
+                            <p class="text-2xl mt-1">${item.value}</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="editCustom(${index})" class="text-amber-400 text-2xl"><i class="fas fa-pencil"></i></button>
+                            <button onclick="deleteCustom(${index})" class="text-red-400 text-2xl"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // 编辑函数
+        function editField(field) {
+            const newVal = prompt(`修改【${field}】当前值：\n${userData[field]}\n\n请输入新内容：`, userData[field]);
+            if (newVal !== null) {
+                userData[field] = newVal;
+                saveData();
+                renderAllPorts();
             }
         }
 
-        function triggerScare() {
-            document.querySelectorAll('.stage').forEach(s => s.style.display = 'none');
-            ghost.style.opacity = '0.8';
-            ghost.style.width = '800px';
-            ghost.style.bottom = '0';
-
-            const scare = document.getElementById('scare');
-            scare.classList.add('active');
-
-            document.body.classList.add('flash');
-
-            setTimeout(() => {
-                document.getElementById('blood-hand').classList.add('rush');
-                document.getElementById('scare-text').classList.add('appear');
-                document.body.style.animation = 'shake 0.8s 4';
-            }, 400);
+        function editCustom(index) {
+            const item = userData.customs[index];
+            const newKey = prompt('修改键名（例如：最想实现的愿望）', item.key);
+            if (!newKey) return;
+            const newVal = prompt('修改内容', item.value);
+            if (newVal !== null) {
+                userData.customs[index] = { key: newKey, value: newVal };
+                saveData();
+                renderCustomPort();
+            }
         }
 
-        // 随机轻微抖动 + 呼吸
-        setInterval(() => {
-            if (currentStage < 5) {
-                document.body.style.transform = `translate(${Math.random()*4-2}px, ${Math.random()*4-2}px)`;
-                setTimeout(() => document.body.style.transform = 'translate(0,0)', 200);
+        function deleteCustom(index) {
+            if (confirm('确定删除这条自定义条目吗？')) {
+                userData.customs.splice(index, 1);
+                saveData();
+                renderCustomPort();
             }
-        }, 3000);
+        }
+
+        function addCustomField() {
+            const key = prompt('新建条目标题（例如：最喜欢的颜色以外的秘密）');
+            if (!key) return;
+            const value = prompt('请输入内容');
+            if (value !== null) {
+                userData.customs.push({ key, value });
+                saveData();
+                renderCustomPort();
+            }
+        }
+
+        function addHobby() {
+            const input = document.getElementById('new-hobby');
+            if (!input.value.trim()) return;
+            userData.hobbies.push(input.value.trim());
+            saveData();
+            renderHobbyPort();
+            input.value = '';
+        }
+
+        function removeHobby(index) {
+            if (confirm('删除这个爱好？')) {
+                userData.hobbies.splice(index, 1);
+                saveData();
+                renderHobbyPort();
+            }
+        }
+
+        function renderAllPorts() {
+            renderBasicPort();
+            renderHobbyPort();
+            renderCustomPort();
+        }
+
+        // 端口切换
+        let currentPort = 0;
+        function switchPort(portIndex) {
+            currentPort = portIndex;
+            document.querySelectorAll('.port-tab').forEach((btn, i) => {
+                btn.classList.toggle('active', i === portIndex);
+            });
+            
+            document.querySelectorAll('.port-content').forEach((content, i) => {
+                content.classList.toggle('hidden', i !== portIndex);
+            });
+        }
+
+        // 不死不运粒子效果
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const symbols = ['🌸', '☠️', '🍀', '💀', '⭐', '🍓'];
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('div');
+                p.className = 'unluck-particle';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.top = Math.random() * 100 + 'vh';
+                p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                p.style.animationDelay = Math.random() * 4 + 's';
+                container.appendChild(p);
+                
+                setTimeout(() => {
+                    if (p.parentNode) p.parentNode.removeChild(p);
+                }, 15000);
+            }
+        }
+
+        // 导出 / 导入
+        function exportData() {
+            const dataStr = JSON.stringify(userData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '不死不运_个人信息备份.json';
+            a.click();
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = ev => {
+                    try {
+                        userData = JSON.parse(ev.target.result);
+                        saveData();
+                        renderAllPorts();
+                        alert('✅ 备份导入成功！不运之力已恢复～');
+                    } catch(err) {
+                        alert('文件格式错误哦～');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function resetAllData() {
+            if (confirm('确定要全部重置吗？会清空所有数据！')) {
+                localStorage.removeItem('undeadUnluckProfile');
+                location.reload();
+            }
+        }
+
+        // 初始化
+        function init() {
+            loadData();
+            renderAllPorts();
+            switchPort(0);
+            
+            // 粒子
+            createParticles();
+            setInterval(() => {
+                if (Math.random() > 0.7) createParticles();
+            }, 3000);
+            
+            // Tailwind 脚本已加载
+            console.log('%c不死不运个人信息储存册 已启动！\n点击铅笔编辑，数据自动保存～', 'color:#ff9ec4; font-size:14px');
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
